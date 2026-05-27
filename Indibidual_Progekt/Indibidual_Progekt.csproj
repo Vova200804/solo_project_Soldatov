@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\EmailGenerator.cs" />
+    <Compile Include="Logic\TemplateRegistry.cs" />
+    <Compile Include="Models\EmailAddress.cs" />
+    <Compile Include="Models\EmailMessage.cs" />
+    <Compile Include="Models\EmailTemplate.cs" />
+    <Compile Include="PatternPrototype\IPrototype.cs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -51,10 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ConsoleUI\" />
+    <Folder Include="Factories\" />
     <Folder Include="FileOutput\" />
-    <Folder Include="Logic\" />
-    <Folder Include="Models\" />
-    <Folder Include="PatternPrototype\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Indibidual_Progekt.PatternPrototype
+﻿namespace Individual_project.PatternPrototype
 {
-  internal class IPrototype
+  public interface IPrototype<T>
   {
+    T Clone();
   }
 }

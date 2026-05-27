@@ -1,12 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Indibidual_Progekt.Models
+﻿namespace Individual_project.Models
 {
-  internal class Name
+  public sealed class EmailAddress
   {
+    public EmailAddress(string name, string address)
+    {
+      Name = name;
+      Address = address;
+    }
+
+    public string Name { get; set; }
+
+    public string Address { get; set; }
+
+    public EmailAddress Clone()
+    {
+      EmailAddress copy;
+
+      copy = new EmailAddress(Name, Address);
+
+      return copy;
+    }
   }
 }
