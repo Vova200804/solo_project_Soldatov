@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleUI\AppMenu.cs" />
+    <Compile Include="Factories\TemplateFactory.cs" />
     <Compile Include="Logic\EmailGenerator.cs" />
     <Compile Include="Logic\TemplateRegistry.cs" />
     <Compile Include="Models\EmailAddress.cs" />
@@ -56,8 +58,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ConsoleUI\" />
-    <Folder Include="Factories\" />
     <Folder Include="FileOutput\" />
     <Folder Include="Utils\" />
   </ItemGroup>

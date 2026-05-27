@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Individual_project.ConsoleUI;
 
 namespace Indibidual_Progekt
 {
@@ -10,6 +6,10 @@ namespace Indibidual_Progekt
   {
     static void Main(string[] args)
     {
+      AppMenu appMenu;
+
+      appMenu = new AppMenu();
+      appMenu.Run();
     }
   }
 }
