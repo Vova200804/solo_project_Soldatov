@@ -27,6 +27,15 @@ namespace Individual_project.Logic
       return message;
     }
 
+    public EmailTemplate CloneTemplate(string templateKey)
+    {
+      EmailTemplate copy;
+
+      copy = templateRegistry.GetClone(templateKey);
+
+      return copy;
+    }
+
     private static List<EmailAddress> CopyRecipients(List<EmailAddress> recipientList)
     {
       List<EmailAddress> copyList;

@@ -12,6 +12,7 @@ namespace Individual_project.ConsoleUI
     private const int ExitOption = 0;
     private const int ListTemplatesOption = 1;
     private const int CreateMessageOption = 2;
+    private const int CloneTemplateOption = 3;
 
     private readonly TemplateRegistry templateRegistry;
     private readonly EmailGenerator emailGenerator;
@@ -43,6 +44,10 @@ namespace Individual_project.ConsoleUI
         {
           CreateMessageFromTemplate();
         }
+        else if (option == CloneTemplateOption)
+        {
+          CloneTemplateAndCreateMessage();
+        }
         else if (option == ExitOption)
         {
           Console.WriteLine("Bye.");
@@ -61,6 +66,7 @@ namespace Individual_project.ConsoleUI
       Console.WriteLine("=== EMAIL TEMPLATE CONSTRUCTOR ===");
       Console.WriteLine("1. List templates");
       Console.WriteLine("2. Create email message from template");
+      Console.WriteLine("3. Clone template and create message");
       Console.WriteLine("0. Exit");
     }
 
@@ -105,6 +111,62 @@ namespace Individual_project.ConsoleUI
       Console.WriteLine();
       Console.WriteLine(emailTextExporter.BuildText(message));
       Console.WriteLine("Saved: " + filePath);
+    }
+
+    private void CloneTemplateAndCreateMessage()
+    {
+      string templateKey;
+      EmailTemplate templateCopy;
+      string messageId;
+      EmailMessage message;
+      string filePath;
+
+      templateKey = ReadString("Template key for cloning: ");
+
+      if (!templateRegistry.HasTemplate(templateKey))
+      {
+        Console.WriteLine("Template not found.");
+        return;
+      }
+
+      templateCopy = emailGenerator.CloneTemplate(templateKey);
+      EditTemplateCopy(templateCopy);
+
+      messageId = ReadString("Message id (example MSG-002): ");
+
+      message = new EmailMessage(messageId);
+      message.Subject = templateCopy.Subject;
+      message.Body = templateCopy.Body;
+      message.Recipients = templateCopy.DefaultRecipients;
+
+      FillPlaceholders(message);
+      filePath = emailTextExporter.ExportToFile(message);
+
+      Console.WriteLine();
+      Console.WriteLine(emailTextExporter.BuildText(message));
+      Console.WriteLine("Saved: " + filePath);
+    }
+
+    private static void EditTemplateCopy(EmailTemplate template)
+    {
+      string newSubject;
+      string newBody;
+
+      Console.WriteLine("Cloned template. You can change subject/body.");
+
+      newSubject = ReadString("New subject (empty to keep): ");
+
+      if (newSubject.Length > 0)
+      {
+        template.Subject = newSubject;
+      }
+
+      newBody = ReadString("New body (empty to keep): ");
+
+      if (newBody.Length > 0)
+      {
+        template.Body = newBody;
+      }
     }
 
     private static void FillPlaceholders(EmailMessage message)
