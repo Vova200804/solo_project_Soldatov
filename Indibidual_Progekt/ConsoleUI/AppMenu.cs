@@ -13,6 +13,7 @@ namespace Individual_project.ConsoleUI
     private const int ListTemplatesOption = 1;
     private const int CreateMessageOption = 2;
     private const int CloneTemplateOption = 3;
+    private const int RunDemoOption = 4;
 
     private readonly TemplateRegistry templateRegistry;
     private readonly EmailGenerator emailGenerator;
@@ -48,6 +49,10 @@ namespace Individual_project.ConsoleUI
         {
           CloneTemplateAndCreateMessage();
         }
+        else if (option == RunDemoOption)
+        {
+          RunDemoScenarios();
+        }
         else if (option == ExitOption)
         {
           Console.WriteLine("Bye.");
@@ -61,12 +66,18 @@ namespace Individual_project.ConsoleUI
       } while (option != ExitOption);
     }
 
+    public void RunDemoOnly()
+    {
+      RunDemoScenarios();
+    }
+
     private static void PrintMenu()
     {
       Console.WriteLine("=== EMAIL TEMPLATE CONSTRUCTOR ===");
       Console.WriteLine("1. List templates");
       Console.WriteLine("2. Create email message from template");
       Console.WriteLine("3. Clone template and create message");
+      Console.WriteLine("4. Run demo scenarios");
       Console.WriteLine("0. Exit");
     }
 
@@ -199,6 +210,73 @@ namespace Individual_project.ConsoleUI
       result = text.Replace(token, value);
 
       return result;
+    }
+
+    private void RunDemoScenarios()
+    {
+      Console.WriteLine("Demo scenarios started.");
+      Console.WriteLine();
+
+      DemoListTemplates();
+      DemoMessage("password-reset", "MSG-001", "Alice", "481516", string.Empty, string.Empty);
+      DemoMessage("order-status", "MSG-002", "Bob", string.Empty, "ORD-77", "Ready");
+      DemoCloneAndMessage("password-reset", "MSG-003");
+
+      Console.WriteLine();
+      Console.WriteLine("Demo scenarios finished.");
+    }
+
+    private void DemoListTemplates()
+    {
+      Console.WriteLine("Scenario 1: list templates");
+      ListTemplates();
+      Console.WriteLine();
+    }
+
+    private void DemoMessage(string templateKey, string messageId, string name, string code, string orderNumber, string status)
+    {
+      EmailMessage message;
+      string filePath;
+
+      Console.WriteLine("Scenario: message from template " + templateKey);
+
+      message = emailGenerator.CreateMessageFromTemplate(templateKey, messageId);
+
+      message.Subject = ReplaceToken(message.Subject, "{name}", name);
+      message.Subject = ReplaceToken(message.Subject, "{code}", code);
+      message.Subject = ReplaceToken(message.Subject, "{orderNumber}", orderNumber);
+      message.Subject = ReplaceToken(message.Subject, "{status}", status);
+
+      message.Body = ReplaceToken(message.Body, "{name}", name);
+      message.Body = ReplaceToken(message.Body, "{code}", code);
+      message.Body = ReplaceToken(message.Body, "{orderNumber}", orderNumber);
+      message.Body = ReplaceToken(message.Body, "{status}", status);
+
+      filePath = emailTextExporter.ExportToFile(message);
+
+      Console.WriteLine("Saved: " + filePath);
+      Console.WriteLine();
+    }
+
+    private void DemoCloneAndMessage(string templateKey, string messageId)
+    {
+      EmailTemplate templateCopy;
+      EmailMessage message;
+      string filePath;
+
+      Console.WriteLine("Scenario: clone template and modify");
+
+      templateCopy = emailGenerator.CloneTemplate(templateKey);
+      templateCopy.Subject = templateCopy.Subject + " (updated)";
+
+      message = new EmailMessage(messageId);
+      message.Subject = ReplaceToken(templateCopy.Subject, "{name}", "Charlie");
+      message.Body = ReplaceToken(templateCopy.Body, "{name}", "Charlie");
+      message.Body = ReplaceToken(message.Body, "{code}", "000000");
+      message.Recipients = templateCopy.DefaultRecipients;
+
+      filePath = emailTextExporter.ExportToFile(message);
+      Console.WriteLine("Saved: " + filePath);
     }
 
     private static int ReadInt(string prompt)

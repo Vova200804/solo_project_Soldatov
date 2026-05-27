@@ -9,6 +9,13 @@ namespace Indibidual_Progekt
       AppMenu appMenu;
 
       appMenu = new AppMenu();
+
+      if (args.Length > 0 && args[0] == "demo")
+      {
+        appMenu.RunDemoOnly();
+        return;
+      }
+
       appMenu.Run();
     }
   }
