@@ -43,7 +43,9 @@ namespace Individual_project.FileOutput
 
       for (recipientIndex = 0; recipientIndex < recipientCount; recipientIndex++)
       {
-        builder.AppendLine("  - " + message.Recipients[recipientIndex].Name + " <" + message.Recipients[recipientIndex].Address + ">");
+        builder.AppendLine(
+          "  - " + message.Recipients[recipientIndex].Name + " <" + message.Recipients[recipientIndex].Address + ">"
+        );
       }
 
       builder.AppendLine();
@@ -56,4 +58,3 @@ namespace Individual_project.FileOutput
     }
   }
 }
-

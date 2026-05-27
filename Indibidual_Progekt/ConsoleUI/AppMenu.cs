@@ -218,8 +218,24 @@ namespace Individual_project.ConsoleUI
       Console.WriteLine();
 
       DemoListTemplates();
-      DemoMessage("password-reset", "MSG-001", "Alice", "481516", string.Empty, string.Empty);
-      DemoMessage("order-status", "MSG-002", "Bob", string.Empty, "ORD-77", "Ready");
+      DemoMessage(
+        "password-reset",
+        "MSG-001",
+        "Alice",
+        "481516",
+        string.Empty,
+        string.Empty
+      );
+
+      DemoMessage(
+        "order-status",
+        "MSG-002",
+        "Bob",
+        string.Empty,
+        "ORD-77",
+        "Ready"
+      );
+
       DemoCloneAndMessage("password-reset", "MSG-003");
 
       Console.WriteLine();
@@ -233,7 +249,14 @@ namespace Individual_project.ConsoleUI
       Console.WriteLine();
     }
 
-    private void DemoMessage(string templateKey, string messageId, string name, string code, string orderNumber, string status)
+    private void DemoMessage(
+      string templateKey,
+      string messageId,
+      string name,
+      string code,
+      string orderNumber,
+      string status
+    )
     {
       EmailMessage message;
       string filePath;

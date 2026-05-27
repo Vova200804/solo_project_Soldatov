@@ -19,4 +19,3 @@ namespace Individual_project.Utils
     }
   }
 }
-
