@@ -123,14 +123,3 @@ Use this code to reset your password: 123456
 Regards,
 Support team
 ```
-
-## История разработки (GitHub Flow)
-
-Разработка велась по GitHub Flow:
-
-- основная ветка `main` - стабильная
-- работа делается в отдельной ветке `feature/...`
-- по шагам добавляется функционал небольшими коммитами
-- в конце изменения вливаются обратно в `main`
-
-Кратко про GitHub Flow: `https://habr.com/ru/articles/346066/`
